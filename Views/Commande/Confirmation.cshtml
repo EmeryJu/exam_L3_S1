@@ -1,0 +1,26 @@
+@model BrasilBurger.Models.Commande
+
+@{
+    ViewData["Title"] = "Confirmation de commande";
+}
+
+<h1>Commande confirmée</h1>
+
+<p>Merci @Model.Client.Prenom @Model.Client.Nom, votre commande a été enregistrée.</p>
+
+<h3>Détails de la commande</h3>
+<ul>
+    <li>ID: @Model.Id</li>
+    <li>Date: @Model.Date</li>
+    <li>Type: @Model.Type</li>
+    <li>État: @Model.Etat</li>
+    <li>Total: @Model.Total €</li>
+</ul>
+
+<h3>Articles</h3>
+@foreach (var item in Model.Items)
+{
+    <p>@(item.Burger?.Nom ?? item.Menu?.Nom) - @item.Prix €</p>
+}
+
+<a href="@Url.Action("Index", "Catalogue")" class="btn btn-primary">Retour au catalogue</a>

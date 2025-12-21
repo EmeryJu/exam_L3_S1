@@ -1,0 +1,80 @@
+@model IEnumerable<BrasilBurger.Models.Commande>
+
+@{
+    ViewData["Title"] = "Commandes";
+}
+
+<h1>Liste des Commandes</h1>
+
+<form method="get" asp-action="Commandes">
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label>Filtre</label>
+            <select name="filter" class="form-control">
+                <option value="all">Toutes</option>
+                <option value="burgers">Burgers</option>
+                <option value="menus">Menus</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label>Date</label>
+            <input type="date" name="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="form-group col-md-2">
+            <label>État</label>
+            <select name="etat" class="form-control">
+                <option value="all">Tous</option>
+                <option value="EnCours">En cours</option>
+                <option value="Pret">Prêt</option>
+                <option value="Termine">Terminé</option>
+                <option value="Annule">Annulé</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-primary form-control">Filtrer</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>État</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var commande in Model)
+        {
+            <tr>
+                <td>@commande.Id</td>
+                <td>@commande.Client.Nom @commande.Client.Prenom</td>
+                <td>@commande.Date</td>
+                <td>@commande.Type</td>
+                <td>@commande.Etat</td>
+                <td>@commande.Total €</td>
+                <td>
+                    @if (commande.Etat == BrasilBurger.Models.EtatCommande.EnCours)
+                    {
+                        <form method="post" asp-action="TerminerCommande" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@commande.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">Marquer comme prêt</button>
+                        </form>
+                        <form method="post" asp-action="AnnulerCommande" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@commande.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Annuler</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

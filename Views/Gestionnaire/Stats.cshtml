@@ -1,0 +1,53 @@
+@model dynamic
+
+@{
+    ViewData["Title"] = "Statistiques";
+}
+
+<h1>Statistiques du Jour</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Commandes en cours</h5>
+                <p class="card-text">@Model.CommandesEnCours</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Commandes validées</h5>
+                <p class="card-text">@Model.CommandesValidees</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Recettes journalières</h5>
+                <p class="card-text">@Model.RecettesJournalieres €</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Burger le plus populaire</h5>
+                <p class="card-text">@(Model.BurgersPopulaires?.Nom ?? "Aucun") - @Model.BurgersPopulaires?.Count ventes</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Commandes annulées</h5>
+                <p class="card-text">@Model.CommandesAnnulees</p>
+            </div>
+        </div>
+    </div>
+</div>

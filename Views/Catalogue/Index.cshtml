@@ -1,0 +1,62 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Catalogue";
+}
+
+<h1>Catalogue Brasil Burger</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link @(ViewData["Filter"]?.ToString() == "all" ? "active" : "")" href="@Url.Action("Index", "Catalogue", new { filter = "all" })">Tout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(ViewData["Filter"]?.ToString() == "burgers" ? "active" : "")" href="@Url.Action("Index", "Catalogue", new { filter = "burgers" })">Burgers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(ViewData["Filter"]?.ToString() == "menus" ? "active" : "")" href="@Url.Action("Index", "Catalogue", new { filter = "menus" })">Menus</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+@if (ViewData["Filter"]?.ToString() == "burgers" || ViewData["Filter"]?.ToString() == "all")
+{
+    <h2>Burgers</h2>
+    <div class="row">
+        @foreach (var burger in Model.Burgers ?? Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="@burger.Image" class="card-img-top" alt="@burger.Nom">
+                    <div class="card-body">
+                        <h5 class="card-title">@burger.Nom</h5>
+                        <p class="card-text">@burger.Prix €</p>
+                        <a href="@Url.Action("DetailsBurger", "Catalogue", new { id = burger.Id })" class="btn btn-primary">Détails</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (ViewData["Filter"]?.ToString() == "menus" || ViewData["Filter"]?.ToString() == "all")
+{
+    <h2>Menus</h2>
+    <div class="row">
+        @foreach (var menu in Model.Menus ?? Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="@menu.Image" class="card-img-top" alt="@menu.Nom">
+                    <div class="card-body">
+                        <h5 class="card-title">@menu.Nom</h5>
+                        <p class="card-text">@menu.Prix €</p>
+                        <a href="@Url.Action("DetailsMenu", "Catalogue", new { id = menu.Id })" class="btn btn-primary">Détails</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

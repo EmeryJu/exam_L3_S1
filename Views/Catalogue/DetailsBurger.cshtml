@@ -1,0 +1,19 @@
+@model BrasilBurger.Models.Burger
+
+@{
+    ViewData["Title"] = "Détails Burger";
+}
+
+<h1>@Model.Nom</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <img src="@Model.Image" class="img-fluid" alt="@Model.Nom">
+    </div>
+    <div class="col-md-6">
+        <h3>Prix: @Model.Prix €</h3>
+        <p>Description du burger...</p>
+        <a href="@Url.Action("Commander", "Commande", new { burgerId = Model.Id })" class="btn btn-success">Commander ce Burger</a>
+        <a href="@Url.Action("Index", "Catalogue")" class="btn btn-secondary">Retour au Catalogue</a>
+    </div>
+</div>
